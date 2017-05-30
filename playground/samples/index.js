@@ -1,7 +1,10 @@
+import trade        from "./trade";
+import description  from "./description";
+import budget       from "./budget";
+import image        from "./image";
 import arrays from "./arrays";
 import nested from "./nested";
 import numbers from "./numbers";
-import trade from "./trade";
 import widgets from "./widgets";
 import ordering from "./ordering";
 import references from "./references";
@@ -16,6 +19,9 @@ import customArray from "./customArray";
 
 export const samples = {
   Trade: trade,
+  Description: description,
+  Budget: budget,
+  Image: image,
   Nested: nested,
   Arrays: arrays,
   Numbers: numbers,
