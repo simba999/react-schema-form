@@ -13,10 +13,6 @@ module.exports = {
         type: "string",
         title: "Select skills",
       },
-      fileType: {
-        type: "string",
-        format: "data-url",
-      },
     },
   },
   uiSchema: {
@@ -27,12 +23,7 @@ module.exports = {
     skillSlugs: {
       "ui:placeholder": "Enter skills here...",
     },
-    fileType: {
-      "ui:widget": "file",
-    },
   },
   formData: {
-    tradeSlugs: "",
-    skillSlugs: "",
   },
 };
