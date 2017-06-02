@@ -1,15 +1,14 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
+  Component
 }                         from 'react';
+import PropTypes          from 'prop-types';
 import Form               from "react-jsonschema-form";
 
 const schema = {
 	title: "Budget",
   type: "object",
-  required: ["budgetLow", "budgetHigh"],
   properties: {
     budgetLow: {
       type: "string",
@@ -52,6 +51,16 @@ class WizardFormBudgetPage extends React.Component {
   }
 
   render() {
+    const validate = (formData, errors) => {
+      console.log("FormData: ", formData);
+      if (formData.budgetLow == '' || typeof formData.budgetLow == "undefined") {
+        errors.budgetLow.addError("The field is required");
+      }
+      if (formData.budgetHigh == '' || typeof formData.budgetHigh == "undefined") {
+        errors.budgetHigh.addError("The field is required");
+      }
+      return errors;
+    }
 
     return (
       <div>
@@ -59,6 +68,7 @@ class WizardFormBudgetPage extends React.Component {
                 uiSchema={uiSchema}
                 onChange={log("changed")}
                 onSubmit={log("submitted")}
+                validate={validate}
                 onError={log("errors")} />
           <button type="button" className="previous" onClick={ this.props.previousPage }>
               Previous
@@ -71,8 +81,8 @@ class WizardFormBudgetPage extends React.Component {
 }
 
 WizardFormBudgetPage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func
 }
 
 export default WizardFormBudgetPage;

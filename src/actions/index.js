@@ -3,6 +3,8 @@ import axios from 'axios';
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
 export const CATEGORY_SELECTED = 'CATEGORY_SELECTED';
 export const FETCH_SAGA = 'FETCH_SAGA';
+export const SAVE_SAGA = 'SAVE_SAGA';
+export const GET_SELECTED_SAGA = 'GET_SELECTED_SAGA';
 export const SUBMIT_EPISODE = 'SUBMIT_EPISODE';
 
 export function categorySelected(category) {
@@ -13,6 +15,32 @@ export function categorySelected(category) {
         payload: category,
     };
 }
+
+export function getSelectedSaga(currentPage) {
+    console.log("get_selected_saga")
+    return {
+        type: GET_SELECTED_SAGA,
+        currentPage: currentPage
+    };
+}
+
+export function saveSelectedSaga(formData, currentPage) {
+    console.log("save_selected")
+    return {
+        type: SAVE_SAGA,
+        payload: formData,
+        currentPage: currentPage
+    };
+}
+
+export function fetchSelectedSaga(saga) {
+
+    return {
+        type: FETCH_SAGA,
+        payload: saga,
+    };
+}
+
 
 export function fetchCategories(term) {
     const url = '/api/categories.json';
@@ -25,13 +53,14 @@ export function fetchCategories(term) {
 }
 
 export function fetchSaga(id) {
-    const url = '/api/jobSchema.json';
-    const request = axios.get(url);
-
-    return {
-        type: FETCH_SAGA,
-        payload: request,
-    };
+    const url = '/api/saga.json';
+    return axios.get(url)
+        .then(response => {
+            return response.data;
+        })
+        .then(json => {
+            return fetchSelectedSaga(json);
+        });
 }
 
 export function submitEpisode(episode) {

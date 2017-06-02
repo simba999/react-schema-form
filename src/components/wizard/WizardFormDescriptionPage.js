@@ -10,7 +10,6 @@ const schema = {
 	title: "Description",
     description: "",
     type: "object",
-    required: ["title", "description"],
     properties: {
       title: {
         type: "string",
@@ -51,12 +50,24 @@ class WizardFormDescriptionPage extends React.Component {
 
   render() {
 
+  	const validate = (formData, errors) => {
+  	  console.log("FormData: ", formData);
+      if (formData.title == '' || typeof formData.title == "undefined") {
+        errors.title.addError("The field is required");
+      }
+      if (formData.description == '' || typeof formData.description == "undefined") {
+        errors.description.addError("The field is required");
+      }
+      return errors;
+  	}
+
     return (
       <div>
           <Form schema={schema}
                 uiSchema={uiSchema}
                 onChange={log("changed")}
                 onSubmit={log("submitted")}
+                validate={validate}
                 onError={log("errors")} />
           <button type="button" className="previous" onClick={ this.props.previousPage }>
               Previous

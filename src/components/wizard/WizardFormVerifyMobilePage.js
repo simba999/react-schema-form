@@ -1,9 +1,9 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
+  Component
 }                         from 'react';
+import PropTypes          from 'prop-types';
 import Form               from "react-jsonschema-form";
 
 const schema = {
@@ -64,8 +64,8 @@ class WizardFormVerifyMobilePage extends React.Component {
 }
 
 WizardFormVerifyMobilePage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func
 }
 
 export default WizardFormVerifyMobilePage;

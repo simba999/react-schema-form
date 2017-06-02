@@ -1,9 +1,9 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
+  Component
 }                                 from 'react';
+import PropTypes                  from 'prop-types';
 import {browserHistory, Link}     from 'react-router';
 // import {Motion, spring, presets}  from 'react-motion';
 
@@ -40,10 +40,6 @@ class WizardFormFirstPage extends React.Component {
     // window.removeEventListener('scroll', this.handleWindowScroll);
   }
 
-  gotoHome() {
-    browserHistory.push('/dashboard');
-  }
-
   render() {
 
     return (
@@ -63,8 +59,8 @@ class WizardFormFirstPage extends React.Component {
 }
 
 WizardFormFirstPage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func
 }
 
 export default WizardFormFirstPage;

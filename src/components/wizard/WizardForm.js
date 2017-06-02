@@ -1,13 +1,13 @@
-import React, { Component, PropTypes }    	from 'react';
-import WizardFormFirstPage                	from './WizardFormFirstPage';
+import React, { Component }    	from 'react';
+import PropTypes 							  from 'prop-types';
+import { connect }              from 'react-redux';
+import {
+  fetchSaga,
+  saveSelectedSaga
+}                               from '../../actions/index';
+import { bindActionCreators }   from 'redux';
+
 import WizardFormTradePage               	from './WizardFormTradePage';
-import WizardFormDescriptionPage            from './WizardFormDescriptionPage';
-import WizardFormBudgetPage               	from './WizardFormBudgetPage';
-import WizardFormImagePage               	from './WizardFormImagePage';
-import WizardFormStatusPage               	from './WizardFormStatusPage';
-import WizardFormContactDetailPage         	from './WizardFormContactDetailPage';
-import WizardFormVerifyMobilePage          	from './WizardFormVerifyMobilePage';
-// import WizardFormTradePage               	from './WizardFormTradePage';
 
 class WizardForm extends Component {
   constructor(props) {
@@ -16,44 +16,68 @@ class WizardForm extends Component {
     this.previousPage   = this.previousPage.bind(this)
     this.showStep       = this.showStep.bind(this)
     this.state = {
-      page: 1
+      page: 1,
+      schemaData: []
     }
   }
+
+  componentWillMount() {
+    const { fetchSaga } = this.props;
+    this.props.fetchSaga(0);
+  }
+
+  componentWillReceiveProps(nextProps, prevProps) {
+    if (nextProps != prevProps) {
+      this.setState({schemaData: nextProps.schemaData.saga.schemaData});
+    }
+  }
+
   nextPage() {
-    this.setState({ page: this.state.page + 1 })
+    this.setState({ page: this.state.page + 1 });
   }
 
   previousPage() {
-    this.setState({ page: this.state.page - 1 })
+    this.setState({ page: this.state.page - 1 });
   }
 
-  showStep() {
-    switch(this.state.page) {
-      case 1:
-        return <WizardFormFirstPage nextPage={this.nextPage}/>
-      case 2:
-        return <WizardFormTradePage nextPage={this.nextPage}/>
-      case 3:
-        return <WizardFormDescriptionPage previousPage={this.previousPage} nextPage={this.nextPage} />
-      case 4:
-        return <WizardFormBudgetPage previousPage={this.previousPage} nextPage={this.nextPage} />
-      case 5:
-        return <WizardFormStatusPage previousPage={this.previousPage} nextPage={this.nextPage} />
-      case 6:
-        return <WizardFormContactDetailPage previousPage={this.previousPage} nextPage={this.nextPage} />
-      case 7:
-        return <WizardFormVerifyMobilePage previousPage={this.previousPage} nextPage={this.nextPage} />
-      case 8:
-        return <WizardFormImagePage previousPage={this.previousPage} nextPage={this.nextPage} />
+  showStep(page) {
+    let page_num = 1;
+    const { schemaData } = this.state;
+    let schemas = schemaData.episodes;
+
+    if (typeof schemas != "undefined") {
+      let formCount = schemas.length;
+
+      let formItem = schemas.map((item) => {
+          
+          if (page == item['order']) {
+            if (page == 1) {
+              console.log("first Step")
+              return <WizardFormTradePage schemaData={item} nextPage={this.nextPage} currentPage={page}/>  
+            }
+            else if (page == formCount) {
+              console.log("Last Step")
+              return <WizardFormTradePage schemaData={item} previousPage={this.previousPage} currentPage={page} />  
+            }
+            else {
+              console.log("middle Step")
+              return <WizardFormTradePage schemaData={item} previousPage={this.previousPage} nextPage={this.nextPage} currentPage={page}/>  
+            }
+          }
+        })
+
+      return formItem;
     }
+
   }
 
   render() {
     const { onSubmit } = this.props
     const { page } = this.state
+    console.log("page num: ", page);
     return (
       <div>
-        {this.showStep()}
+        {this.showStep(page)}
       </div>
     )
   }
@@ -63,4 +87,20 @@ WizardForm.propTypes = {
   onSubmit: PropTypes.func
 }
 
-export default WizardForm
+function mapStateToProps(state) {
+    console.log("PropData: ", state);
+    return {
+      schemaData: state
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+    {
+      fetchSaga: (id) => dispatch(fetchSaga(id)),
+      saveSelectedSaga: (saga, currentPage) => dispatch(saveSelectedSaga(saga, currentPage))
+    }, 
+    dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WizardForm);

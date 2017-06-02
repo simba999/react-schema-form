@@ -5,7 +5,7 @@
   "episodes": [
     {
       "type": "BasicEpisode",
-      "jsonSchema": {
+      "schema": {
         "title": "A registration form",
         "description": "A simple form example.",
         "type": "object",
@@ -57,12 +57,12 @@
         }
       },
       "title": "Basic Episode",
-      "order": 0
+      "order": 1
     },
     {
       "type": "BasicEpisode",
-      "jsonSchema": {
-        "title": "A registration form",
+      "schema": {
+        "title": "A registration form2",
         "description": "A simple form example.",
         "type": "object",
         "required": [
@@ -113,7 +113,63 @@
         }
       },
       "title": "Basic Episode",
-      "order": 0
+      "order": 2
+    },
+    {
+      "type": "BasicEpisode",
+      "schema": {
+        "title": "A registration form3",
+        "description": "A simple form example.",
+        "type": "object",
+        "required": [
+          "firstName",
+          "lastName"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "title": "First name"
+          },
+          "lastName": {
+            "type": "string",
+            "title": "Last name"
+          },
+          "age": {
+            "type": "integer",
+            "title": "Age"
+          },
+          "bio": {
+            "type": "string",
+            "title": "Bio"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password",
+            "minLength": 3
+          }
+        }
+      },
+      "uiSchema": {
+        "firstName": {
+          "ui:autofocus": true,
+          "ui:emptyValue": ""
+        },
+        "age": {
+          "ui:widget": "updown"
+        },
+        "bio": {
+          "ui:widget": "textarea"
+        },
+        "password": {
+          "ui:widget": "password",
+          "ui:help": "Hint: Make it strong!"
+        },
+        "date": {
+          "ui:widget": "alt-datetime"
+        }
+      },
+      "title": "Basic Episode",
+      "order": 3
     }
   ]
 }

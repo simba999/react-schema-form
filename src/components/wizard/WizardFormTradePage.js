@@ -1,41 +1,19 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
-}                                 from 'react';
-import {browserHistory, Link}     from 'react-router';
-import { Field, reduxForm }       from 'redux-form'
-// import {Motion, spring, presets}  from 'react-motion';
+  Component
+}                         from 'react';
+import PropTypes          from 'prop-types';
+import Form               from "../../form";
+import {Field, reduxForm} from 'redux-form';
+import { connect }              from 'react-redux';
+import {
+  fetchSaga,
+  saveSelectedSaga,
+  getSelectedSaga
+}                               from '../../actions/index';
+import { bindActionCreators }   from 'redux';
 
-import axios from "axios";
-import Form from "react-jsonschema-form";
-
-const schema = {
-    title: "Trade",
-    type: "object",
-    required: ["tradeSlugs", "skillSlugs"],
-    properties: {
-      tradeSlugs: {
-        type: "string",
-        title: "Select a trade",
-      },
-      skillSlugs: {
-        type: "string",
-        title: "Select skills",
-      },
-    }
-};
-
-const uiSchema = {
-    tradeSlugs: {
-      "ui:autofocus": true,
-      "ui:placeholder": "Enter trade here...",
-    },
-    skillSlugs: {
-      "ui:placeholder": "Enter skills here...",
-    }
-};
 
 const log = (type) => console.log.bind(console, type);
 
@@ -44,32 +22,102 @@ class WizardFormTradePage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {
+    const { schema, uiSchema, validate } = this.props.schemaData;
 
-    }
+    this.state = {
+      form: true,
+      schema,
+      uiSchema,
+      validate,
+      liveValidate: true,
+      shareURL: null,
+    };
+
+    console.log("schema:  ",this.props.previousPage)
+    console.log("Next Props:  ", this.props.nextPage)
+    console.log("state:   ", this.state)
   }
 
   componentWillMount() {
+
+  }
+
+  componentDidMount() {
     // window.addEventListener('scroll', this.handleWindowScroll);
+    const { ArrayFieldTemplate } = this.props.schemaData;
+    const { getSelectedSaga, currentPage } = this.props;
+
+    getSelectedSaga(currentPage);
+    this.setState({ form: false }, _ =>
+      this.setState({ ...this.props.schemaData, form: true, ArrayFieldTemplate })
+    );
   }
 
   componentWillUnmount() {
     // window.removeEventListener('scroll', this.handleWindowScroll);
   }
 
+  componentWillReceiveProps(nextProps, prevProps) {
+    if (nextProps != prevProps) {
+      const { schema, uiSchema, formData, validate, ArrayFieldTemplate } = nextProps.schemaData;
+      console.log("SDFSFSDFSD:  ", nextProps.formData.sagaSelected.data);
+      this.setState({formData: nextProps.formData.sagaSelected.data});
+      this.setState({ ...nextProps.schemaData, form: true, ArrayFieldTemplate });
+    }
+  }
+
+  onFormDataChange = ({ formData }) =>
+    this.setState({ formData, shareURL: null });
+
+  onSubmit = (formData) => {
+    console.log("Cliked Submit:  ", formData);
+    const { saveSelectedSaga, currentPage } = this.props;
+    console.log("currentPage Submit:  ", currentPage);
+    saveSelectedSaga(formData, currentPage);
+  }
+
   render() {
+    const {
+      schema,
+      uiSchema,
+      formData,
+      liveValidate,
+      validate,
+      ArrayFieldTemplate,
+      transformErrors,
+    } = this.state;
 
     return (
       <div>
           <Form schema={schema}
                 uiSchema={uiSchema}
+                formData={formData}
                 onChange={log("changed")}
-                onSubmit={log("submitted")}
+                onSubmit={({formData}) => this.onSubmit(formData)}
+                validate={this.state.validate}
+                ArrayFieldTemplate={ArrayFieldTemplate}
+                liveValidate={liveValidate}
+                transformErrors={transformErrors}
                 onError={log("errors")} />
-          <button type="button" className="previous">
-              Previous
-          </button>
-          <button type="submit" className="next" onClick={ this.props.nextPage }>Next</button>
+          {
+            typeof this.props.previousPage != "undefined" ?
+              <button type="button" className="previous" onClick={ this.props.previousPage }>
+                  Previous
+              </button>
+            :
+              ''
+          }
+          {
+            typeof this.props.nextPage != "undefined" ?
+              <button type="button" className="next" onClick={ this.props.nextPage }>
+                  next
+              </button>
+            :
+              <button type="submit" className="next">
+                  next submit
+              </button>
+          }
+          
       </div>
     );
   }
@@ -77,11 +125,27 @@ class WizardFormTradePage extends React.Component {
 }
 
 WizardFormTradePage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func,
+  schemaData    : PropTypes.any,
+  currentPage   : PropTypes.number,
 }
 
-export default reduxForm({
-  form: 'wizard',  //Form name is same
-  destroyOnUnmount: false
-})(WizardFormTradePage)
+function mapStateToProps(state) {
+    return {
+      formData: state
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+    {
+      fetchSaga: (id) => dispatch(fetchSaga(id)),
+      saveSelectedSaga: (formData, currentPage) => dispatch(saveSelectedSaga(formData, currentPage)),
+      getSelectedSaga: (currentPage) => dispatch(getSelectedSaga(currentPage))
+    }, 
+    dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WizardFormTradePage);
+

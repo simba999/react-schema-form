@@ -32,7 +32,6 @@ class Episode extends Component {
 
         return (
            <WizardForm></WizardForm>
-
         );
     }
 }

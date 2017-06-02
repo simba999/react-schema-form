@@ -1,9 +1,9 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
+  Component
 }                           from 'react';
+import PropTypes            from 'prop-types';
 import Form                 from "react-jsonschema-form";
 
 const schema = {
@@ -21,24 +21,6 @@ const schema = {
       ]
     },
   }
-}
-
-const uiSchema = {
-  firstName: {
-      "ui:placeholder": "Enter name here...",
-    },
-    lastName: {
-      "ui:placeholder": "Enter name here...",
-    },
-    email: {
-      "ui:placeholder": "Enter email here...",
-    },
-    mobile: {
-      "ui:placeholder": "Enter number here...",
-    },
-    address: {
-      "ui:placeholder": "Enter code / house here...",
-    }
 }
 
 const log = (type) => console.log.bind(console, type);
@@ -62,7 +44,7 @@ class WizardFormDetailPage extends React.Component {
   }
 
   render() {
-
+    
     return (
       <div>
           <Form schema={schema}
@@ -81,8 +63,8 @@ class WizardFormDetailPage extends React.Component {
 }
 
 WizardFormDetailPage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func
 }
 
 export default WizardFormDetailPage;

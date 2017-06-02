@@ -1,10 +1,10 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
-}                                 from 'react';
-import Form from "react-jsonschema-form";
+  Component
+}                             from 'react';
+import PropTypes              from 'prop-types';
+import Form                   from "react-jsonschema-form";
 
 const schema = {
 	title: "Contact Detail",
@@ -73,12 +73,44 @@ class WizardFormContactDetailPage extends React.Component {
 
   render() {
 
+    const validate = (formData, errors) => {
+      if (formData.firstName == '' || typeof formData.firstName == "undefined") {
+        errors.firstName.addError("The field is required");
+      }
+
+      if (formData.lastName == '' || typeof formData.lastName == "undefined") {
+        errors.lastName.addError("The field is required");
+      }
+
+      if (formData.email == '' || typeof formData.email == "undefined") {
+        errors.email.addError("The field is required");
+      }
+
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)) {
+        errors.email.addError("Invalid Email");
+      }
+
+      if (formData.mobile == '' || typeof formData.mobile == "undefined") {
+        errors.mobile.addError("The field is required");
+      }
+
+      if (formData.mobile.length < 10 || typeof formData.mobile.length > 10 || /^[1-9]{1}[0-9]{9}$/.test(formData.mobile)) {
+        errors.mobile.addError("The field is required");
+      }
+
+      if (formData.address == '' || typeof formData.address == "undefined") {
+        errors.address.addError("The field is required");
+      }
+      return errors;
+    }
+
     return (
       <div>
           <Form schema={schema}
                 uiSchema={uiSchema}
                 onChange={log("changed")}
                 onSubmit={log("submitted")}
+                validate={validate}
                 onError={log("errors")} />
           <button type="button" className="previous" onClick={ this.props.previousPage }>
               Previous
@@ -91,8 +123,8 @@ class WizardFormContactDetailPage extends React.Component {
 }
 
 WizardFormContactDetailPage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func
 }
 
 export default WizardFormContactDetailPage;

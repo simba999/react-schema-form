@@ -1,10 +1,10 @@
 /* global $:true */
 
 import React, {
-  Component,
-  PropTypes
-}                   from 'react';
-import Form 		from "react-jsonschema-form";
+  Component
+}                   			from 'react';
+import PropTypes 				from 'prop-types';
+import Form 					from "react-jsonschema-form";
 
 const schema = {
 	title: "Image",
@@ -63,8 +63,8 @@ class WizardFormImagePage extends React.Component {
 }
 
 WizardFormImagePage.propTypes = {
-  previousPage  : React.PropTypes.func,
-  nextPage      : React.PropTypes.func
+  previousPage  : PropTypes.func,
+  nextPage      : PropTypes.func
 }
 
 export default WizardFormImagePage;
