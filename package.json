@@ -28,6 +28,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "babel-preset-stage-1": "^6.1.18",
+    "immutable": "^3.8.1",
     "lodash": "^3.10.1",
     "prop-types": "^15.5.10",
     "react": "^15.5.0",
@@ -37,6 +38,7 @@
     "react-router": "^2.0.1",
     "redux": "^3.0.4",
     "redux-form": "^6.7.0",
+    "redux-promise": "^0.5.3",
     "redux-react-schema-form": "^1.1.3"
   }
 }
