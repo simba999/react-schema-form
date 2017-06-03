@@ -8,8 +8,6 @@ export const GET_SELECTED_SAGA = 'GET_SELECTED_SAGA';
 export const SUBMIT_EPISODE = 'SUBMIT_EPISODE';
 
 export function categorySelected(category) {
-
-    console.log('inside action: ', category);
     return {
         type: CATEGORY_SELECTED,
         payload: category,
@@ -17,7 +15,6 @@ export function categorySelected(category) {
 }
 
 export function getSelectedSaga(currentPage) {
-    console.log("get_selected_saga")
     return {
         type: GET_SELECTED_SAGA,
         currentPage: currentPage
@@ -25,7 +22,6 @@ export function getSelectedSaga(currentPage) {
 }
 
 export function saveSelectedSaga(formData, currentPage) {
-    console.log("save_selected")
     return {
         type: SAVE_SAGA,
         payload: formData,
@@ -54,6 +50,7 @@ export function fetchCategories(term) {
 
 export function fetchSaga(id) {
     const url = '/api/saga.json';
+    
     return axios.get(url)
         .then(response => {
             return response.data;

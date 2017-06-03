@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {categorySelected} from "../actions/index";
-import {bindActionCreators} from "redux";
+import React, {Component}       from "react";
+import {connect}                from "react-redux";
+import {categorySelected}       from "../actions/index";
+import {bindActionCreators}     from "redux";
 
 class CategoryList extends Component {
 

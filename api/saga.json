@@ -66,30 +66,17 @@
         "description": "A simple form example.",
         "type": "object",
         "required": [
-          "firstName",
-          "lastName"
+          "title",
+          "description"
         ],
         "properties": {
-          "firstName": {
+          "title": {
             "type": "string",
-            "title": "First name"
+            "title": "title"
           },
-          "lastName": {
+          "description": {
             "type": "string",
-            "title": "Last name"
-          },
-          "age": {
-            "type": "integer",
-            "title": "Age"
-          },
-          "bio": {
-            "type": "string",
-            "title": "Bio"
-          },
-          "password": {
-            "type": "string",
-            "title": "Password",
-            "minLength": 3
+            "title": "description"
           }
         }
       },

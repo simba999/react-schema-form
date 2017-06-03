@@ -1,18 +1,18 @@
 /* global $:true */
 
-import React, {
-  Component
-}                         from 'react';
-import PropTypes          from 'prop-types';
-import Form               from "../../form";
-import {Field, reduxForm} from 'redux-form';
-import { connect }              from 'react-redux';
+import React, { Component }         from 'react';
+import PropTypes                    from 'prop-types';
+import Form                         from "react-jsonschema-form";
+import { Field, reduxForm }         from 'redux-form';
+import { connect }                  from 'react-redux';
+
 import {
   fetchSaga,
   saveSelectedSaga,
   getSelectedSaga
-}                               from '../../actions/index';
-import { bindActionCreators }   from 'redux';
+}                                   from '../../actions/index';
+
+import  { bindActionCreators }      from 'redux';
 
 
 const log = (type) => console.log.bind(console, type);
@@ -33,8 +33,6 @@ class WizardFormTradePage extends React.Component {
       shareURL: null,
     };
 
-    console.log("schema:  ",this.props.previousPage)
-    console.log("Next Props:  ", this.props.nextPage)
     console.log("state:   ", this.state)
   }
 
@@ -43,25 +41,24 @@ class WizardFormTradePage extends React.Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('scroll', this.handleWindowScroll);
     const { ArrayFieldTemplate } = this.props.schemaData;
     const { getSelectedSaga, currentPage } = this.props;
 
     getSelectedSaga(currentPage);
+    
     this.setState({ form: false }, _ =>
       this.setState({ ...this.props.schemaData, form: true, ArrayFieldTemplate })
     );
   }
 
   componentWillUnmount() {
-    // window.removeEventListener('scroll', this.handleWindowScroll);
   }
 
   componentWillReceiveProps(nextProps, prevProps) {
     if (nextProps != prevProps) {
       const { schema, uiSchema, formData, validate, ArrayFieldTemplate } = nextProps.schemaData;
-      console.log("SDFSFSDFSD:  ", nextProps.formData.sagaSelected.data);
-      this.setState({formData: nextProps.formData.sagaSelected.data});
+      
+      this.setState({ formData: nextProps.formData.sagaSelected.data.data });
       this.setState({ ...nextProps.schemaData, form: true, ArrayFieldTemplate });
     }
   }
@@ -70,9 +67,7 @@ class WizardFormTradePage extends React.Component {
     this.setState({ formData, shareURL: null });
 
   onSubmit = (formData) => {
-    console.log("Cliked Submit:  ", formData);
     const { saveSelectedSaga, currentPage } = this.props;
-    console.log("currentPage Submit:  ", currentPage);
     saveSelectedSaga(formData, currentPage);
   }
 

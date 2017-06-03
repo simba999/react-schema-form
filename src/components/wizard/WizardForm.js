@@ -28,7 +28,7 @@ class WizardForm extends Component {
 
   componentWillReceiveProps(nextProps, prevProps) {
     if (nextProps != prevProps) {
-      this.setState({schemaData: nextProps.schemaData.saga.schemaData});
+      this.setState({schemaData: nextProps.schemaData.saga.schemaData});  
     }
   }
 
