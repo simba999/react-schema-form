@@ -57,7 +57,7 @@ class WizardFormTradePage extends React.Component {
   componentWillReceiveProps(nextProps, prevProps) {
     if (nextProps != prevProps) {
       const { schema, uiSchema, formData, validate, ArrayFieldTemplate } = nextProps.schemaData;
-      
+      console.log("WILL: ", nextProps)
       this.setState({ formData: nextProps.formData.sagaSelected.data.data });
       this.setState({ ...nextProps.schemaData, form: true, ArrayFieldTemplate });
     }

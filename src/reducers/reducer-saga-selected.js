@@ -17,10 +17,15 @@ console.log('++++++++++++++++++++++', initState)
 export default function(state = initState, action) {
     switch (action.type) {
         case SAVE_SAGA:
-            let currentData = state.data || []
+
+            let currentData = []
+            currentData.push(state.data);
+            console.log("SAVE_AAA: ", currentData);
             let isData = false, idx = 0
-            state.data.forEach((d, index)=>{
-                if(d.currentPage == action.currentPage){
+            console.log("SAVE_SELECTED_SAGA: ", state.data);
+
+            currentData.map((item, index) => {
+                if(item.currentPage == action.currentPage){
                     isData = true
                     idx = index
                 }
@@ -31,27 +36,40 @@ export default function(state = initState, action) {
                     data: action.payload,
                     currentPage: action.currentPage
                 })
-            }else{
-                currentData[idx].data = action.payload
+            } else {
+                currentData[idx].push({
+                    data: action.payload,
+                    currentPage: action.currentPage
+                })
             }
-
+         
             state.data = currentData;
 
-        	return state
+        	return { ...state }
 
         case GET_SELECTED_SAGA:
-            currentData = state.data;
+            console.log("AAA: ", state.data);
+            currentData = [];
+            isData = false;
+
+            currentData.push(state.data);
+            if ( currentData.length == 1 ) {
+                return { ...state };
+            }
+            
             state.data.forEach((d, index) => {
                 if(d.currentPage == action.currentPage){
-                    isData = true
-                    idx = index
+                    isData = true;
+                    idx = index;
                 }
             })
 
             if (isData == false) {
-                return currentData[idx].data
+                return { ...state };
             } else {
-                return {}
+                state.data = currentData[idx];
+
+                return { ...state };
             }
     }
     return state;
