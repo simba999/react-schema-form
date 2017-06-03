@@ -6,38 +6,28 @@ import {Map, List, toJS, fromJS}              from 'immutable';
 let initState = {
     data: [{
         currentPage: 0,
-        data:{}
+        data:{
+        }
     }]    
 }
-
-// let initState = Map(data).toJS();
-
-console.log('++++++++++++++++++++++', initState)
 
 export default function(state = initState, action) {
     switch (action.type) {
         case SAVE_SAGA:
 
-            let currentData = []
-            currentData.push(state.data);
-            console.log("SAVE_AAA: ", currentData);
+            let currentData = state.data;
             let isData = false, idx = 0
-            console.log("SAVE_SELECTED_SAGA: ", state.data);
 
-            currentData.map((item, index) => {
+            currentData.map((item) => {
                 if(item.currentPage == action.currentPage){
-                    isData = true
-                    idx = index
+                    isData = true;
+                    item['data'] = action.payload;
+                    item['currentPage'] = action.currentPage;
                 }
             })
 
             if(isData == false) {
                 currentData.push({
-                    data: action.payload,
-                    currentPage: action.currentPage
-                })
-            } else {
-                currentData[idx].push({
                     data: action.payload,
                     currentPage: action.currentPage
                 })
@@ -48,28 +38,20 @@ export default function(state = initState, action) {
         	return { ...state }
 
         case GET_SELECTED_SAGA:
-            console.log("AAA: ", state.data);
-            currentData = [];
+            currentData = state.data;
             isData = false;
-
-            currentData.push(state.data);
-            if ( currentData.length == 1 ) {
-                return { ...state };
-            }
             
-            state.data.forEach((d, index) => {
-                if(d.currentPage == action.currentPage){
-                    isData = true;
+            currentData.map((item, index) => {
+                if(item.currentPage == action.currentPage){
                     idx = index;
+                    isData = true;
                 }
             })
 
             if (isData == false) {
-                return { ...state };
+                state.data = []
             } else {
-                state.data = currentData[idx];
-
-                return { ...state };
+                state.data = currentData['idx'];
             }
     }
     return state;

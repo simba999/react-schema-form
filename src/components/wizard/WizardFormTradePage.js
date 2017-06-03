@@ -34,6 +34,7 @@ class WizardFormTradePage extends React.Component {
     };
 
     console.log("state:   ", this.state)
+    console.log("props:   ", this.props)
   }
 
   componentWillMount() {
@@ -42,12 +43,12 @@ class WizardFormTradePage extends React.Component {
 
   componentDidMount() {
     const { ArrayFieldTemplate } = this.props.schemaData;
-    const { getSelectedSaga, currentPage } = this.props;
+    const { getSelectedSaga, currentPage, formData } = this.props;
 
     getSelectedSaga(currentPage);
     
     this.setState({ form: false }, _ =>
-      this.setState({ ...this.props.schemaData, form: true, ArrayFieldTemplate })
+      this.setState({ ...this.props.schemaData, formData: formData.sagaSelected.data[0], ArrayFieldTemplate })
     );
   }
 
@@ -57,8 +58,13 @@ class WizardFormTradePage extends React.Component {
   componentWillReceiveProps(nextProps, prevProps) {
     if (nextProps != prevProps) {
       const { schema, uiSchema, formData, validate, ArrayFieldTemplate } = nextProps.schemaData;
-      console.log("WILL: ", nextProps)
-      this.setState({ formData: nextProps.formData.sagaSelected.data.data });
+      
+      if (Object.keys(nextProps.formData.sagaSelected.data).length == 0) {
+        this.setState({ formData: {}});
+      } else {
+        this.setState({ formData: nextProps.formData.sagaSelected.data[0].data });  
+      }
+      
       this.setState({ ...nextProps.schemaData, form: true, ArrayFieldTemplate });
     }
   }
