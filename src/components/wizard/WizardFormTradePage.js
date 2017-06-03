@@ -87,6 +87,10 @@ class WizardFormTradePage extends React.Component {
 		saveSelectedSaga(formData, currentPage);
 	}
 
+	submitData () => {
+		submitAction()
+	}
+
 	render() {
 		const {
 			schema,
@@ -124,8 +128,8 @@ class WizardFormTradePage extends React.Component {
 									next
 							</button>
 						:
-							<button type="submit" className="next">
-									next submit
+							<button type="submit" className="next" onClick={ () => this.submitData() }>
+									next
 							</button>
 					}
 					

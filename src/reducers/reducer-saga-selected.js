@@ -1,6 +1,4 @@
-import {CATEGORY_SELECTED}              from '../actions/index';
-import {SAVE_SAGA}                      from '../actions/index';
-import {GET_SELECTED_SAGA}              from '../actions/index';
+import { CATEGORY_SELECTED, SAVE_SAGA, GET_SELECTED_SAGA }  from '../actions/index';
 
 let initState = {
     data: [{
