@@ -1,12 +1,6 @@
 import {CATEGORY_SELECTED} from '../actions/index';
 import {FETCH_SAGA} from '../actions/index';
 
-const initState = {
-	filter: '',
-	data: '',
-    currentPage: 1
-};
-
 export default function(state = initState, action) {
     switch (action.type) {
         case CATEGORY_SELECTED:

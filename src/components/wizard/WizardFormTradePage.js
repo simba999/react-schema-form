@@ -7,9 +7,9 @@ import { Field, reduxForm }         from 'redux-form';
 import { connect }                  from 'react-redux';
 
 import {
-  fetchSaga,
-  saveSelectedSaga,
-  getSelectedSaga
+	fetchSaga,
+	saveSelectedSaga,
+	getSelectedSaga
 }                                   from '../../actions/index';
 
 import  { bindActionCreators }      from 'redux';
@@ -19,133 +19,143 @@ const log = (type) => console.log.bind(console, type);
 
 class WizardFormTradePage extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
+	constructor(props, context) {
+		super(props, context);
 
-    const { schema, uiSchema, validate } = this.props.schemaData;
+		const { schema, uiSchema, validate } = this.props.schemaData;
 
-    this.state = {
-      form: true,
-      schema,
-      uiSchema,
-      validate,
-      liveValidate: true,
-      shareURL: null,
-    };
+		this.state = {
+			form: false,
+			formData: {},
+			schema,
+			uiSchema,
+			validate,
+			liveValidate: true,
+			shareURL: null,
+		};
 
-    console.log("state:   ", this.state)
-    console.log("props:   ", this.props)
-  }
+	}
 
-  componentWillMount() {
+	componentWillMount() {
 
-  }
+	}
 
-  componentDidMount() {
-    const { ArrayFieldTemplate } = this.props.schemaData;
-    const { getSelectedSaga, currentPage, formData } = this.props;
+	componentDidMount() {
+		const { ArrayFieldTemplate } = this.props.schemaData;
+		const { getSelectedSaga, currentPage, formData } = this.props;
 
-    getSelectedSaga(currentPage);
-    
-    this.setState({ form: false }, _ =>
-      this.setState({ ...this.props.schemaData, formData: formData.sagaSelected.data[0], ArrayFieldTemplate })
-    );
-  }
+		this.setState({ ...this.props.schemaData, ArrayFieldTemplate })
 
-  componentWillUnmount() {
-  }
+		getSelectedSaga(currentPage);
+	}
 
-  componentWillReceiveProps(nextProps, prevProps) {
-    if (nextProps != prevProps) {
-      const { schema, uiSchema, formData, validate, ArrayFieldTemplate } = nextProps.schemaData;
-      
-      if (Object.keys(nextProps.formData.sagaSelected.data).length == 0) {
-        this.setState({ formData: {}});
-      } else {
-        this.setState({ formData: nextProps.formData.sagaSelected.data[0].data });  
-      }
-      
-      this.setState({ ...nextProps.schemaData, form: true, ArrayFieldTemplate });
-    }
-  }
+	componentWillUnmount() {
+	}
 
-  onFormDataChange = ({ formData }) =>
-    this.setState({ formData, shareURL: null });
+	componentWillReceiveProps(nextProps, prevProps) {
+		if (nextProps != prevProps) {
+			const { schema, uiSchema, validate, ArrayFieldTemplate } = nextProps.schemaData;
+			
+			if (Object.keys(nextProps.formData.sagaSelected.pagedata.data).length > 0) {
+				this.setState({ 
+					...nextProps.schemaData, 
+					form: true, 
+					ArrayFieldTemplate, 
+					formData: nextProps.formData.sagaSelected.pagedata.data 
+				});
+			}
+			else {
+				let resultFormData = {};
 
-  onSubmit = (formData) => {
-    const { saveSelectedSaga, currentPage } = this.props;
-    saveSelectedSaga(formData, currentPage);
-  }
+				nextProps.formData.sagaSelected.data.map((item) => {
+						resultFormData = item.data;
+				})
+				this.setState({ 
+					...nextProps.schemaData,
+					form: true, ArrayFieldTemplate,
+					formData: resultFormData 
+				});
+			}
+		}
+	}
 
-  render() {
-    const {
-      schema,
-      uiSchema,
-      formData,
-      liveValidate,
-      validate,
-      ArrayFieldTemplate,
-      transformErrors,
-    } = this.state;
+	onFormDataChange = ({ formData }) =>
+		this.setState({ formData, shareURL: null });
 
-    return (
-      <div>
-          <Form schema={schema}
-                uiSchema={uiSchema}
-                formData={formData}
-                onChange={log("changed")}
-                onSubmit={({formData}) => this.onSubmit(formData)}
-                validate={this.state.validate}
-                ArrayFieldTemplate={ArrayFieldTemplate}
-                liveValidate={liveValidate}
-                transformErrors={transformErrors}
-                onError={log("errors")} />
-          {
-            typeof this.props.previousPage != "undefined" ?
-              <button type="button" className="previous" onClick={ this.props.previousPage }>
-                  Previous
-              </button>
-            :
-              ''
-          }
-          {
-            typeof this.props.nextPage != "undefined" ?
-              <button type="button" className="next" onClick={ this.props.nextPage }>
-                  next
-              </button>
-            :
-              <button type="submit" className="next">
-                  next submit
-              </button>
-          }
-          
-      </div>
-    );
-  }
+	onSubmit = (formData) => {
+		const { saveSelectedSaga, currentPage } = this.props;
+		saveSelectedSaga(formData, currentPage);
+	}
+
+	render() {
+		const {
+			schema,
+			uiSchema,
+			formData,
+			liveValidate,
+			validate,
+			ArrayFieldTemplate,
+			transformErrors,
+		} = this.state;
+
+		return (
+			<div>
+					<Form schema={schema}
+								uiSchema={uiSchema}
+								formData={formData}
+								onChange={log("changed")}
+								onSubmit={({formData}) => this.onSubmit(formData)}
+								validate={this.state.validate}
+								ArrayFieldTemplate={ArrayFieldTemplate}
+								liveValidate={liveValidate}
+								transformErrors={transformErrors}
+								onError={log("errors")} />
+					{
+						typeof this.props.previousPage != "undefined" ?
+							<button type="button" className="previous" onClick={ this.props.previousPage }>
+									Previous
+							</button>
+						:
+							''
+					}
+					{
+						typeof this.props.nextPage != "undefined" ?
+							<button type="button" className="next" onClick={ this.props.nextPage }>
+									next
+							</button>
+						:
+							<button type="submit" className="next">
+									next submit
+							</button>
+					}
+					
+			</div>
+		);
+	}
 
 }
 
 WizardFormTradePage.propTypes = {
-  previousPage  : PropTypes.func,
-  nextPage      : PropTypes.func,
-  schemaData    : PropTypes.any,
-  currentPage   : PropTypes.number,
+	previousPage  : PropTypes.func,
+	nextPage      : PropTypes.func,
+	schemaData    : PropTypes.any,
+	currentPage   : PropTypes.number,
 }
 
 function mapStateToProps(state) {
-    return {
-      formData: state
-    };
+		return {
+			formData: state
+		};
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-    {
-      fetchSaga: (id) => dispatch(fetchSaga(id)),
-      saveSelectedSaga: (formData, currentPage) => dispatch(saveSelectedSaga(formData, currentPage)),
-      getSelectedSaga: (currentPage) => dispatch(getSelectedSaga(currentPage))
-    }, 
-    dispatch);
+		return bindActionCreators(
+		{
+			fetchSaga: (id) => dispatch(fetchSaga(id)),
+			saveSelectedSaga: (formData, currentPage) => dispatch(saveSelectedSaga(formData, currentPage)),
+			getSelectedSaga: (currentPage) => dispatch(getSelectedSaga(currentPage))
+		}, 
+		dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WizardFormTradePage);

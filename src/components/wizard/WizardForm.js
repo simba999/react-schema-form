@@ -7,7 +7,7 @@ import {
 }                               from '../../actions/index';
 import { bindActionCreators }   from 'redux';
 
-import WizardFormTradePage               	from './WizardFormTradePage';
+import WizardFormTradePage      from './WizardFormTradePage';
 
 class WizardForm extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class WizardForm extends Component {
 
   componentWillReceiveProps(nextProps, prevProps) {
     if (nextProps != prevProps) {
-      this.setState({schemaData: nextProps.schemaData.saga.schemaData});  
+      this.setState({ schemaData: nextProps.schemaData.saga.schemaData });  
     }
   }
 
@@ -52,15 +52,12 @@ class WizardForm extends Component {
           
           if (page == item['order']) {
             if (page == 1) {
-              console.log("first Step")
               return <WizardFormTradePage schemaData={item} nextPage={this.nextPage} currentPage={page}/>  
             }
             else if (page == formCount) {
-              console.log("Last Step")
               return <WizardFormTradePage schemaData={item} previousPage={this.previousPage} currentPage={page} />  
             }
             else {
-              console.log("middle Step")
               return <WizardFormTradePage schemaData={item} previousPage={this.previousPage} nextPage={this.nextPage} currentPage={page}/>  
             }
           }
@@ -74,7 +71,6 @@ class WizardForm extends Component {
   render() {
     const { onSubmit } = this.props
     const { page } = this.state
-    console.log("page num: ", page);
     return (
       <div>
         {this.showStep(page)}
