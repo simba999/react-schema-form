@@ -2,9 +2,11 @@ import { CATEGORY_SELECTED, SAVE_SAGA, GET_SELECTED_SAGA }  from '../actions/ind
 
 let initState = {
     data: [{
-        currentPage: 0,
-        data:{
-        }
+        page: 0,
+        formData:{},
+        schema: {},
+        uiSchema: {},
+        title: '',
     }]    
 }
 
@@ -15,17 +17,27 @@ export default function(state = initState, action) {
             let isData = false, idx = 0
 
             currentData.map((item) => {
-                if(item.currentPage == action.currentPage){
+                console.log("Item record before: ", item)
+                console.log("currentPage before: ", action.currentPage)
+
+                if(item.page == action.currentPage){
                     isData = true;
-                    item['data'] = action.payload;
-                    item['currentPage'] = action.currentPage;
+                    item['formData'] = action.payload;
+                    item['page'] = action.currentPage;
+                    item['schema'] = action.schemaData.schema;
+                    item['uiSchema'] = action.schemaData.uiSchema;
+                    item['title'] = action.schemaData.title;
                 }
+                console.log("Item record: ", item)
             })
 
             if(isData == false) {
+                console.log("add New:")
                 currentData.push({
-                    data: action.payload,
-                    currentPage: action.currentPage
+                    formData: action.payload,
+                    page: action.currentPage,
+                    schema: action.schemaData.schema,
+                    uiSchema: action.schemaData.uiSchema
                 })
             }
          
@@ -36,7 +48,7 @@ export default function(state = initState, action) {
             currentData = state.data;
             isData = false;
             currentData.map((item, index) => {
-                if(item.currentPage == action.currentPage){
+                if(item.page == action.currentPage){
                     idx = index;
                     isData = true;
                 }
@@ -44,8 +56,10 @@ export default function(state = initState, action) {
 
             if (isData == false) {
                 state.data.push({
-                    currentPage: action.currentPage,
-                    data: {}
+                    page: action.currentPage,
+                    formData: {},
+                    schema: {},
+                    uiSchema: {}
                 })
                 idx = state.data.length - 1;
             } 

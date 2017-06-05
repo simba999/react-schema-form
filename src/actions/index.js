@@ -21,11 +21,12 @@ export function getSelectedSaga(currentPage) {
     };
 }
 
-export function saveSelectedSaga(formData, currentPage) {
+export function saveSelectedSaga(formData, currentPage, schemaData) {
     return {
         type: SAVE_SAGA,
         payload: formData,
-        currentPage: currentPage
+        currentPage: currentPage,
+        schemaData: schemaData
     };
 }
 
@@ -68,4 +69,9 @@ export function submitEpisode(episode) {
         type: FETCH_SAGA,
         payload: request,
     };
+}
+
+export function submitFormData(formDataList) {
+    const url = 'https://invis.io/A3BO7RO8G#/233278815_2-0_Fixie/v1/categories?categoryType=Trade'
+    const request = axios.post(url, episode);
 }

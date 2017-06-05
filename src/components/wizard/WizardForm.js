@@ -11,71 +11,70 @@ import WizardFormTradePage      from './WizardFormTradePage';
 
 class WizardForm extends Component {
   constructor(props) {
-    super(props)
-    this.nextPage       = this.nextPage.bind(this)
-    this.previousPage   = this.previousPage.bind(this)
-    this.showStep       = this.showStep.bind(this)
-    this.state = {
-      page: 1,
-      schemaData: []
-    }
+	super(props)
+	this.nextPage       = this.nextPage.bind(this)
+	this.previousPage   = this.previousPage.bind(this)
+	this.showStep       = this.showStep.bind(this)
+	this.state = {
+	  page: 1,
+	  schemaData: []
+	}
   }
 
   componentWillMount() {
-    const { fetchSaga } = this.props;
-    this.props.fetchSaga(0);
+	const { fetchSaga } = this.props;
+	this.props.fetchSaga(0);
   }
 
   componentWillReceiveProps(nextProps, prevProps) {
-    if (nextProps != prevProps) {
-      this.setState({ schemaData: nextProps.schemaData.saga.schemaData });  
-    }
+	if (nextProps != prevProps) {
+	  this.setState({ schemaData: nextProps.schemaData.saga.schemaData });  
+	}
   }
 
   nextPage() {
-    this.setState({ page: this.state.page + 1 });
+	this.setState({ page: this.state.page + 1 });
   }
 
   previousPage() {
-    this.setState({ page: this.state.page - 1 });
+	this.setState({ page: this.state.page - 1 });
   }
 
   showStep(page) {
-    let page_num = 1;
-    const { schemaData } = this.state;
-    let schemas = schemaData.episodes;
+	let page_num = 1;
+	const { schemaData } = this.state;
+	let schemas = schemaData.episodes;
 
-    if (typeof schemas != "undefined") {
-      let formCount = schemas.length;
+	if (typeof schemas != "undefined") {
+	  let formCount = schemas.length;
 
-      let formItem = schemas.map((item) => {
-          
-          if (page == item['order']) {
-            if (page == 1) {
-              return <WizardFormTradePage schemaData={item} nextPage={this.nextPage} currentPage={page}/>  
-            }
-            else if (page == formCount) {
-              return <WizardFormTradePage schemaData={item} previousPage={this.previousPage} currentPage={page} />  
-            }
-            else {
-              return <WizardFormTradePage schemaData={item} previousPage={this.previousPage} nextPage={this.nextPage} currentPage={page}/>  
-            }
-          }
-        })
+	  let formItem = schemas.map((item, index) => {
+		  if (page == item['page']) {
+			if (page == 1) {
+			  return <WizardFormTradePage key={index} schemaData={item} nextPage={this.nextPage} currentPage={page}/>  
+			}
+			else if (page == formCount) {
+			  return <WizardFormTradePage key={index} schemaData={item} previousPage={this.previousPage} currentPage={page} />  
+			}
+			else {
+			  return <WizardFormTradePage key={index} schemaData={item} previousPage={this.previousPage} nextPage={this.nextPage} currentPage={page}/>  
+			}
+		  }
+		})
 
-      return formItem;
-    }
+	  return formItem;
+	}
 
   }
 
   render() {
-    const { onSubmit } = this.props
-    const { page } = this.state
-    return (
-      <div>
-        {this.showStep(page)}
-      </div>
-    )
+	const { onSubmit } = this.props
+	const { page } = this.state
+	return (
+	  <div>
+		{this.showStep(page)}
+	  </div>
+	)
   }
 }
 
@@ -84,19 +83,19 @@ WizardForm.propTypes = {
 }
 
 function mapStateToProps(state) {
-    console.log("PropData: ", state);
-    return {
-      schemaData: state
-    };
+	console.log("PropData: ", state);
+	return {
+	  schemaData: state
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-    {
-      fetchSaga: (id) => dispatch(fetchSaga(id)),
-      saveSelectedSaga: (saga, currentPage) => dispatch(saveSelectedSaga(saga, currentPage))
-    }, 
-    dispatch);
+	return bindActionCreators(
+	{
+	  fetchSaga: (id) => dispatch(fetchSaga(id)),
+	  saveSelectedSaga: (saga, currentPage) => dispatch(saveSelectedSaga(saga, currentPage))
+	}, 
+	dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WizardForm);

@@ -57,10 +57,10 @@
         }
       },
       "title": "Basic Episode",
-      "order": 1
+      "page": 1
     },
     {
-      "type": "BasicEpisode",
+      "type": "BasicEpisode2",
       "schema": {
         "title": "A registration form2",
         "description": "A simple form example.",
@@ -81,26 +81,13 @@
         }
       },
       "uiSchema": {
-        "firstName": {
+        "title": {
           "ui:autofocus": true,
           "ui:emptyValue": ""
-        },
-        "age": {
-          "ui:widget": "updown"
-        },
-        "bio": {
-          "ui:widget": "textarea"
-        },
-        "password": {
-          "ui:widget": "password",
-          "ui:help": "Hint: Make it strong!"
-        },
-        "date": {
-          "ui:widget": "alt-datetime"
         }
       },
-      "title": "Basic Episode",
-      "order": 2
+      "title": "Basic Episode2",
+      "page": 2
     },
     {
       "type": "BasicEpisode",
@@ -155,8 +142,8 @@
           "ui:widget": "alt-datetime"
         }
       },
-      "title": "Basic Episode",
-      "order": 3
+      "title": "Basic Episode3",
+      "page": 3
     }
   ]
 }

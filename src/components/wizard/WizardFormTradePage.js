@@ -9,7 +9,8 @@ import { connect }                  from 'react-redux';
 import {
 	fetchSaga,
 	saveSelectedSaga,
-	getSelectedSaga
+	getSelectedSaga,
+	submitFormData
 }                                   from '../../actions/index';
 
 import  { bindActionCreators }      from 'redux';
@@ -56,19 +57,19 @@ class WizardFormTradePage extends React.Component {
 		if (nextProps != prevProps) {
 			const { schema, uiSchema, validate, ArrayFieldTemplate } = nextProps.schemaData;
 			
-			if (Object.keys(nextProps.formData.sagaSelected.pagedata.data).length > 0) {
+			if (Object.keys(nextProps.formData.sagaSelected.pagedata.formData).length > 0) {
 				this.setState({ 
 					...nextProps.schemaData, 
 					form: true, 
 					ArrayFieldTemplate, 
-					formData: nextProps.formData.sagaSelected.pagedata.data 
+					formData: nextProps.formData.sagaSelected.pagedata.formData 
 				});
 			}
 			else {
 				let resultFormData = {};
 
 				nextProps.formData.sagaSelected.data.map((item) => {
-						resultFormData = item.data;
+						resultFormData = item.formData;
 				})
 				this.setState({ 
 					...nextProps.schemaData,
@@ -83,12 +84,16 @@ class WizardFormTradePage extends React.Component {
 		this.setState({ formData, shareURL: null });
 
 	onSubmit = (formData) => {
-		const { saveSelectedSaga, currentPage } = this.props;
-		saveSelectedSaga(formData, currentPage);
+		const { saveSelectedSaga, currentPage, schemaData } = this.props;
+		console.log("Submit page:  ", currentPage);
+		saveSelectedSaga(formData, currentPage, schemaData);
 	}
 
-	submitData () => {
-		submitAction()
+	submitData = () => {
+		const { formData, submitFormData, schemaData } = this.props;
+		let formDataList = formData.sagaSelected.data;
+		let episode = []
+		console.log("Saga selected:  ", formDataList);
 	}
 
 	render() {
@@ -156,8 +161,9 @@ function mapDispatchToProps(dispatch) {
 		return bindActionCreators(
 		{
 			fetchSaga: (id) => dispatch(fetchSaga(id)),
-			saveSelectedSaga: (formData, currentPage) => dispatch(saveSelectedSaga(formData, currentPage)),
-			getSelectedSaga: (currentPage) => dispatch(getSelectedSaga(currentPage))
+			saveSelectedSaga: (formData, page, schemaData) => dispatch(saveSelectedSaga(formData, page, schemaData)),
+			getSelectedSaga: (page) => dispatch(getSelectedSaga(page)),
+			submitFormData: (formDataList) => dispatch(submitFormData(formDataList))
 		}, 
 		dispatch);
 }
