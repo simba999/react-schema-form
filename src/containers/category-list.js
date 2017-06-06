@@ -40,15 +40,15 @@ class CategoryList extends Component {
                 </thead>
                 <tbody>
                 {this.props.categories.map(this.renderCategory)}
-                </tbody>
+                </tbody>                                                                                                                                                                                                                                                                                                                                                                            
             </table>
         );
-    }
+    }                                                                                   
 
     onCategorySelect(category) {
         this.props.categorySelected(category);
-    }
-}
+    }                                                                                                                                   
+                                            }
 
 function mapStateToProps({categories}) {
     return {categories};

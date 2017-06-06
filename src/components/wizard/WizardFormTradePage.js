@@ -85,7 +85,6 @@ class WizardFormTradePage extends React.Component {
 
 	onSubmit = (formData) => {
 		const { saveSelectedSaga, currentPage, schemaData } = this.props;
-		console.log("Submit page:  ", currentPage);
 		saveSelectedSaga(formData, currentPage, schemaData);
 	}
 
@@ -93,7 +92,6 @@ class WizardFormTradePage extends React.Component {
 		const { formData, submitFormData, schemaData } = this.props;
 		let formDataList = formData.sagaSelected.data;
 		let episode = []
-		console.log("Saga selected:  ", formDataList);
 	}
 
 	render() {

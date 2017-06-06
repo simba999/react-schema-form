@@ -10,7 +10,10 @@ class SearchBar extends Component {
 
         this.state = {
             term: '',
-            options: [{}]
+            options: [{
+                id: 1,
+                alias: 'abc alias'
+            }]
         };
 
         this.onInputChange = this.onInputChange.bind(this);
@@ -25,7 +28,6 @@ class SearchBar extends Component {
     }
 
     componentWillReceiveProps(nextProps, prevProps) {
-        console.log("nextProps:  ", nextProps)
         if (nextProps != prevProps) {
             console.log("nextProps:  ", nextProps.categories)
             this.setState({ options: nextProps.categories });
@@ -68,14 +70,15 @@ class SearchBar extends Component {
         return (
             <section className="search-section">
                 <form onSubmit={(e) => this.submitCategory(e)}>
-                 <div className="input-group">
+                 <div className="form-group">
                     <Typeahead
                         clearButton
                         align="justify"
                         onInputChange={(e) => this.onInputChange(e)}
                         labelKey="alias"
                         name="searchText"
-                        options={this.props.categories}
+                        className=""
+                        options={this.props.categories.categories}
                     />
                     <div>
                         <button type="button" onClick={(e) => this.submitCategory(e)}>Submit</button>
@@ -88,7 +91,6 @@ class SearchBar extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("Search State: ", state)
     return { categories: state }
 }
 

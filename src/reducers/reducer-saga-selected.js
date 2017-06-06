@@ -17,9 +17,6 @@ export default function(state = initState, action) {
             let isData = false, idx = 0
 
             currentData.map((item) => {
-                console.log("Item record before: ", item)
-                console.log("currentPage before: ", action.currentPage)
-
                 if(item.page == action.currentPage){
                     isData = true;
                     item['formData'] = action.payload;
@@ -28,11 +25,9 @@ export default function(state = initState, action) {
                     item['uiSchema'] = action.schemaData.uiSchema;
                     item['title'] = action.schemaData.title;
                 }
-                console.log("Item record: ", item)
             })
 
             if(isData == false) {
-                console.log("add New:")
                 currentData.push({
                     formData: action.payload,
                     page: action.currentPage,

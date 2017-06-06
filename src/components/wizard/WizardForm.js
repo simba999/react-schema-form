@@ -83,7 +83,6 @@ WizardForm.propTypes = {
 }
 
 function mapStateToProps(state) {
-	console.log("PropData: ", state);
 	return {
 	  schemaData: state
 	};
