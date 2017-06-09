@@ -7,7 +7,7 @@ export default function(state = [], action) {
             return {
                 ...state,
                 data: action.payload
-            }
+            };
 
         case FETCH_SAGA:
         	return {

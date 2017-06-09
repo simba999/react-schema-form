@@ -72,6 +72,14 @@ export function submitEpisode(episode) {
 }
 
 export function submitFormData(formDataList) {
-    const url = 'https://invis.io/A3BO7RO8G#/233278815_2-0_Fixie/v1/categories?categoryType=Trade'
+    const url = 'https://invis.io/A3BO7RO8G#/233278815_2-0_Fixie/v1/categories?categoryType=Trade';
     const request = axios.post(url, episode);
+}
+
+export function sagaForm() {
+    console.log("save form");
+    return {
+        type: 'SAGA_FORM',
+        data: true,
+    }
 }

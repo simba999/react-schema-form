@@ -1,7 +1,7 @@
 import React, {Component}               from "react";
 import {connect}                        from "react-redux";
 import {bindActionCreators}             from "redux";
-import {fetchCategories}                from "../actions/index";
+import {fetchCategories, sagaForm}                from "../actions/index";
 import { Typeahead }                    from 'react-bootstrap-typeahead';
 
 class SearchBar extends Component {
@@ -29,7 +29,6 @@ class SearchBar extends Component {
 
     componentWillReceiveProps(nextProps, prevProps) {
         if (nextProps != prevProps) {
-            console.log("nextProps:  ", nextProps.categories)
             this.setState({ options: nextProps.categories });
         }
     }
@@ -46,16 +45,16 @@ class SearchBar extends Component {
     }
 
     submitCategory(e) {
-        // const { fetchCategories } = this.props;
-        // event.preventDefault();
-        var acc = document.getElementsByName('searchText').value;
-        console.log("submit button:", document.getElementsByName('searchText')[0].value)
-        let categories = fetchCategories();
-        this.setState({options: categories});
-    }
+        event.preventDefault();
 
-    _handleChange(e) {
-        console.log("Change:  ", e)
+        const { sagaForm } = this.props;
+
+        var acc = document.getElementsByName('searchText')[0].value;
+        if (acc !== "") {
+            sagaForm();
+        } else {
+            alert('Please select the category!')
+        }     
     }
 
     render() {
@@ -66,7 +65,6 @@ class SearchBar extends Component {
                       {id: 4, name: 'Herbie'},
                       {id: 5, name: 'John1'},
                     ];
-        console.log("Props:  ", this.props)
         return (
             <section className="search-section">
                 <form onSubmit={(e) => this.submitCategory(e)}>
@@ -74,7 +72,6 @@ class SearchBar extends Component {
                     <Typeahead
                         clearButton
                         align="justify"
-                        onInputChange={(e) => this.onInputChange(e)}
                         labelKey="alias"
                         name="searchText"
                         className=""
@@ -95,7 +92,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchCategories}, dispatch);
+    return bindActionCreators({
+        fetchCategories: () => dispatch(fetchCategories()),
+        sagaForm: () => dispatch(sagaForm())
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
