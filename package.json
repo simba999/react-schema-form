@@ -38,6 +38,7 @@
     "react-jsonschema-form": "^0.48.2",
     "react-redux": "4.3.0",
     "react-router": "^2.0.1",
+    "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "redux": "^3.0.4",
     "redux-devtools": "^3.4.0",

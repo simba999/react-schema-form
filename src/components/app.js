@@ -1,14 +1,14 @@
-import React, {Component} 	from "react";
-import SearchBar 			from "../containers/search-bar";
-import Episode 				from "../containers/episode";
+import React, {Component} 	from 'react';
+import { Route, Switch } from 'react-router-dom';
+import SchemaForm from './schema-form';
+import Home from '../containers/home';
 
 export default class App extends Component {
     render() {
         return (
-            <div>
-                <SearchBar />
-                <Episode />
-            </div>
+            <Switch>
+            	<Route path="/" component={Home} />
+            </Switch>
         );
     }
 }
