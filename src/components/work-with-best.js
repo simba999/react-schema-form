@@ -39,15 +39,39 @@ export default class WorkWithBest extends Component {
 					        </div>
 						</div>
 					</div>
-					<div style={{height:300,backgroundColor:"white",display:"flex"}}>
-					  <div className="service-item col-md-4">AAA</div>
-					  <div className="service-item col-md-4">BBB</div>
-					  <div className="service-item col-md-4">CCC</div>
+					<div style={{height:300,display:"flex"}}>
+						<div className="work-profile-item col-md-4">
+					        <div className="item-rect">
+					        	Search
+					        </div>
+						</div>
+						<div className="work-profile-item col-md-4">
+							<div className="item-rect">
+					        	Search
+					        </div>
+						</div>
+						<div className="work-profile-item col-md-4">
+							<div className="item-rect">
+					        	Search
+					        </div>
+						</div>
 					</div>
-					<div style={{height:300,backgroundColor:"lightpink",display:"flex"}}>
-					  <div className="col-md-4">AAA</div>
-					  <div className="col-md-4">BBB</div>
-					  <div className="col-md-4">CCC</div>
+					<div style={{height:300,display:"flex"}}>
+						<div className="work-profile-item col-md-4">
+					        <div className="item-rect">
+					        	Search
+					        </div>
+						</div>
+						<div className="work-profile-item col-md-4">
+							<div className="item-rect">
+					        	Search
+					        </div>
+						</div>
+						<div className="work-profile-item col-md-4">
+							<div className="item-rect">
+					        	Search
+					        </div>
+						</div>
 					</div>
 				</React_Bootstrap_Carousel>
             </div>
