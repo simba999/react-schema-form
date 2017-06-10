@@ -13,7 +13,9 @@ class Item extends Component {
             isEndToday: isEndToday,
             price: price,
             key: key
-        };
+        }
+
+        console.log("props: ", this.props);
     }
 
     render() {

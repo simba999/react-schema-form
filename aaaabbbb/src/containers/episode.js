@@ -20,9 +20,12 @@ class Episode extends Component {
 
 	componentWillReceiveProps(nextProps, prevProps) {
 		if (nextProps !== prevProps) {
+			console.log("Will:  ", nextProps);
 			if (nextProps.schemaData.categorySelected === null) {
-
+				console.log("Will none11:  ", nextProps.schemaData.categorySelected);
+				// this.setState({ isForm: true })
 			} else {
+				console.log("Will Receive11:  ", nextProps.schemaData.categorySelected.isForm);
 				this.setState({ isForm: nextProps.schemaData.categorySelected.isForm })
 			}
 

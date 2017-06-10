@@ -77,6 +77,7 @@ export function submitFormData(formDataList) {
 }
 
 export function sagaForm() {
+    console.log("save form");
     return {
         type: 'SAGA_FORM',
         data: true,

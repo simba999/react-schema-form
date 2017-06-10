@@ -152,6 +152,10 @@ body {
 	flex-direction: column;
 }
 
+.guard {
+	background-image: url('/style/heart-icon.png') no-repeat;
+}
+
 .slick-slider {
 	display: flex !important;
     align-items: center !important;

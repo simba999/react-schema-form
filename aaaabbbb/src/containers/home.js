@@ -23,7 +23,8 @@ class Home extends Component {
 	}
 
 	componentWillReceiveProps(nextProps, prevProps) {
-
+		if (nextProps !== prevProps) {
+		}
 	}
 
     render() {

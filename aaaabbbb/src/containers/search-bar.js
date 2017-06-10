@@ -24,10 +24,11 @@ class SearchBar extends Component {
     componentDidMount() {
         const { fetchCategories } = this.props;
         fetchCategories('');
+        console.log("seacrchProps:  ", this.props)
     }
 
     componentWillReceiveProps(nextProps, prevProps) {
-        if (nextProps !== prevProps) {
+        if (nextProps != prevProps) {
             this.setState({ options: nextProps.categories });
         }
     }
@@ -43,12 +44,12 @@ class SearchBar extends Component {
         this.setState({term: ''});
     }
 
-    submitCategory() {
+    submitCategory(e) {
         event.preventDefault();
 
         const { sagaForm } = this.props;
 
-        let acc = document.getElementsByName('searchText')[0].value;
+        var acc = document.getElementsByName('searchText')[0].value;
         if (acc !== "") {
             sagaForm();
         } else {
@@ -57,6 +58,13 @@ class SearchBar extends Component {
     }
 
     render() {
+        let myData = [
+                      {id: 1, name: 'John'},
+                      {id: 2, name: 'Miles'},
+                      {id: 3, name: 'Charles'},
+                      {id: 4, name: 'Herbie'},
+                      {id: 5, name: 'John1'},
+                    ];
         return (
             <section className="search-section">
                 <form onSubmit={(e) => this.submitCategory(e)}>
@@ -70,7 +78,7 @@ class SearchBar extends Component {
                         options={this.props.categories.categories}
                     />
                     <div>
-                        <button type="button" onClick={() => this.submitCategory()}>Submit</button>
+                        <button type="button" onClick={(e) => this.submitCategory(e)}>Submit</button>
                     </div>
                 </div>
                 </form>
