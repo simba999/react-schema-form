@@ -1,10 +1,11 @@
 import React from 'react';
 import Slider from 'react-slick';
 import Item from './item.js';
+import Carousel from 'nuka-carousel';
 
 let data = [
     {
-        "isHeart": true,
+        "isHeart": false,
         "isShield": true,
         "isGreen": true,
         "starMark": 5,
@@ -26,29 +27,24 @@ let data = [
         "starMark": 5,
         "isEndToday": true,
         "price": 0
+    },
+    {
+        "isHeart": true,
+        "isShield": false,
+        "isGreen": true,
+        "starMark": 5,
+        "isEndToday": true,
+        "price": 0
     }
 ];
 
-function SamplePrevArrow(props) {
-    const { style, onClick } = props;
-    return (
-        <div
-            className="slick-arrow glyphicon glyphicon-menu-left"
-            style={{...style, display: 'block'}}
-            onClick={onClick}
-        ></div>
-    );
-}
-
-function SampleNextArrow(props) {
-    const { style, onClick } = props;
-    return (
-        <div
-            className="slick-arrow glyphicon glyphicon-menu-right"
-            style={{...style, display: 'block'}}
-            onClick={onClick}
-        ></div>
-    );
+let testData = {
+	"isHeart": true,
+    "isShield": false,
+    "isGreen": true,
+    "starMark": 5,
+    "isEndToday": true,
+    "price": 0
 }
 
 function ItemList(data) {
@@ -75,6 +71,57 @@ function ItemList(data) {
     return List
 }
 
+let Decorators = [
+{
+  component: React.createClass({
+    render() {
+      return (
+        <span
+        	style={this.getButtonStyles(this.props.currentSlide === 0)}
+        	className="glyphicon glyphicon-menu-left"
+          	onClick={this.props.previousSlide}>
+        </span>
+      )
+    },
+    getButtonStyles(disabled) {
+        return {
+          border: 0,
+          color: 'black',
+          padding: 10,
+          outline: 0,
+          opacity: disabled ? 0.3 : 1,
+          cursor: 'pointer'
+        }
+    }
+  }),
+  position: 'CenterLeft', 
+},
+{
+  component: React.createClass({
+    render() {
+      return (
+        <span
+        	style={this.getButtonStyles(this.props.currentSlide === Math.floor(this.props.slideCount / 3))}
+        	className="glyphicon glyphicon-menu-right"
+          	onClick={this.props.nextSlide}>
+        </span>
+      )
+    },
+    getButtonStyles(disabled) {
+        return {
+          border: 0,
+          color: 'black',
+          padding: 10,
+          outline: 0,
+          opacity: disabled ? 0.3 : 1,
+          cursor: 'pointer'
+        }
+    }
+  }),
+  position: 'CenterRight', 
+}
+];
+
 export default class Index extends React.Component {
     constructor(props){
         super(props);
@@ -85,34 +132,30 @@ export default class Index extends React.Component {
             isGreen: true,
             starMark: 0,
             isEndToday: true,
-            price: 0
+            price: 0,
+            slideCount: data.length,
+            countPerSlide: 3,
+            slideIndex: 0,
+
         }
     }
 
-    componentDidMount() {
-    }
-
     render() {
-        const settings = {
-            dots: false,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            arrows: true,
-            prevArrow: <SamplePrevArrow />,
-            nextArrow: <SampleNextArrow />
-        };
+    	let itemList = ItemList(data);
 
-        let itemList = ItemList(data);
-        return(
-            <Slider {...settings}>
+    	return (
+    		<Carousel
+    			ref="carousel"
+    			decorators={Decorators}
+    			slideIndex={this.state.slideIndex}
+    			slidesToShow={this.state.countPerSlide}
+    			afterSlide={newSlideIndex => this.setState({ slideIndex: newSlideIndex })}
+    			>
                 {
                     itemList
                 }
-            </Slider>
-        );
+    		</Carousel>
+    	)
     }
-
 
 }

@@ -4,7 +4,7 @@ import React, {Component, PropTypes} 	from "react";
 class Item extends Component {
     constructor(props) {
         super(props);
-        const { isHeart, isShield, isGreen, starMark, isEndToday, price, key } = this.props;
+        const { isHeart, isShield, isGreen, starMark, isEndToday, price, key1 } = this.props;
         this.state = {
             isHeart: isHeart,
             isShield: isShield,
@@ -12,7 +12,7 @@ class Item extends Component {
             starMark: starMark,
             isEndToday: isEndToday,
             price: price,
-            key: key
+            key1: key1
         };
     }
 
@@ -20,7 +20,7 @@ class Item extends Component {
         const { starMark, price } = this.state;
 
         return (
-            <div className="service-item" key={this.state.key}>
+            <div className="service-item" key={this.state.key1}>
                 <div className="item-rect">
                     <div className="item-rect__header">
                         {
@@ -85,7 +85,7 @@ Item.propTypes = {
     starMark      : PropTypes.number,
     isEndToday    : PropTypes.bool,
     price         : PropTypes.number,
-    key           : PropTypes.number
+    key1          : PropTypes.number
 };
 
 export default Item;

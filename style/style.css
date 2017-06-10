@@ -1,4 +1,4 @@
-body {
+	body {
 	font-size: 12px;
 }
 
@@ -159,4 +159,8 @@ body {
 
 .slick-list {
 	text-align: center;
+}
+
+.slider-frame {
+	margin: 0px 20px !important;
 }
