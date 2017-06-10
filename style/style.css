@@ -1,0 +1,110 @@
+body {
+	font-size: 12px;
+}
+
+.header-right{
+	display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.right-margin-small {
+	margin-right: 10px;
+}
+
+.navbar {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.navbar__item {
+	margin: 0 30px;
+	list-style-type: none;
+	padding: 10px 10px;
+	text-decoration: none !important;
+}
+
+.navbar__item a:active {
+	border: #000000 solid 1px;
+}
+
+.navbar__item a:hover {
+	border: #000000 solid 1px;
+}
+
+.carousel-inner {
+	padding-left: 40px !important;
+	padding-right: 40px !important;
+}
+
+.carousel-control {
+	width: 0 !important;
+}
+
+.service-item, .profile-item {
+	background: white;
+	border: grey solid 2px;
+	margin: 0 10px;
+	padding-right: 0 !important;
+	padding-left: 0 !important;
+}
+
+.item-rect {
+	background: black;
+	width: 100%;
+	height: 80%;
+	color: white;
+}
+
+.item-rect__header {
+	text-align: end;
+	padding: 10px;
+}
+
+.item-nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.item-nav__button {
+	padding: 10px;
+	margin: 5px 10px;
+    align-items: center;
+    border: grey solid 1px;
+}
+
+.right-position {
+	text-align: end;
+}
+
+.center {
+	text-align: center
+}
+
+.work-profile-item .item-rect {
+	background: grey;
+	padding-right: 0 !important;
+	padding-left: 0 !important;
+}
+
+.button-group {
+	text-align: center;
+	display: flex;
+	align-items: center;
+	padding-right: 60px;
+	padding-left: 60px;
+}
+
+.orange-btn {
+	padding: 10px;
+    border: orangered solid 1px;
+    color: orangered;
+    margin: 10px;
+}
+
+.header-text {
+	padding-right: 60px;
+	padding-left: 60px;
+	font-size: 2em;
+}

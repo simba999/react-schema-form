@@ -7,6 +7,7 @@ import Navbar from "../components/navbar";
 import SchemaForm from "../components/schema-form";
 import LastService from "../components/last-service";
 import Footer from "../components/footer";
+import WorkWithBest from "../components/work-with-best";
 
 class Home extends Component {
 	constructor(props) {
@@ -26,22 +27,15 @@ class Home extends Component {
 
     render() {
         return (
-        	<section>
-        		<div className="row">
-        			<Header />
-        		</div>
-        		<div className="row">
-        			<Navbar />
-        		</div>
-        		<div className="row">
-        			<SchemaForm />
-        		</div>
-        		<div className="row">
-        			<LastService />
-        		</div>
-        		<div className="row">
-        			<Footer />
-        		</div>
+        	<section className="">
+    			<Header />
+    			<div className="jumbotron">
+	    			<Navbar />
+	    			<SchemaForm />
+	    		</div>
+    			<LastService />
+    			<WorkWithBest />
+    			<Footer />
            	</section>
         );
     }
