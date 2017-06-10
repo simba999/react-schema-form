@@ -6,7 +6,14 @@ import {React_Bootstrap_Carousel} from 'react-bootstrap-carousel';
 
 export default class LastService extends Component {
 	componentDidMount() {
-	
+		this.state = {
+			isHeart: false,
+			isShield: true,
+			isGreen: true,
+			starMark: 0,
+			isEndToday: true,
+			value: 0
+		}
 	}
 	render() {
 		return (

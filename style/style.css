@@ -108,3 +108,46 @@ body {
 	padding-left: 60px;
 	font-size: 2em;
 }
+
+.profile-item__body {
+	height: 60%;
+	width: 100%;
+}
+
+
+
+.profile-image {
+	background: grey;
+	height: 100%;
+}
+
+.description {
+	border: grey solid 2px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    height: auto;
+    width: 30% !important;
+    font-size: 2em;
+    margin: 20px;
+}
+
+.description__title {
+	background: darkgrey;
+	height: 50%;
+	display: flex;
+    align-items: flex-end;
+    margin: auto 0px;
+    justify-content: center;
+}
+
+.description__content {
+	background: white;
+	height: 50%;
+}
+
+.footer-info {
+	display: flex;
+	flex-direction: column;
+}

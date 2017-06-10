@@ -8,6 +8,8 @@ import SchemaForm from "../components/schema-form";
 import LastService from "../components/last-service";
 import Footer from "../components/footer";
 import WorkWithBest from "../components/work-with-best";
+import Inspiring from "../components/inspiring"; 
+import Description from "../components/description";
 
 class Home extends Component {
 	constructor(props) {
@@ -35,6 +37,8 @@ class Home extends Component {
 	    		</div>
     			<LastService />
     			<WorkWithBest />
+    			<Inspiring />
+    			<Description />
     			<Footer />
            	</section>
         );
