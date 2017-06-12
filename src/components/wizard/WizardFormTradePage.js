@@ -4,15 +4,13 @@ import React, { Component }         from 'react';
 import PropTypes                    from 'prop-types';
 import Form                         from "react-jsonschema-form";
 import { connect }                  from 'react-redux';
-
 import {
     fetchSaga,
     saveSelectedSaga,
     getSelectedSaga
 }                                   from '../../actions/index';
-
 import  { bindActionCreators }      from 'redux';
-
+import jQuery from 'jquery';
 
 const log = (type) => console.log.bind(console, type);
 
@@ -32,11 +30,9 @@ class WizardFormTradePage extends Component {
             liveValidate: true,
             shareURL: null,
         };
-
     }
 
     componentWillMount() {
-
     }
 
     componentDidMount() {
@@ -45,9 +41,10 @@ class WizardFormTradePage extends Component {
 
         this.setState({ ...this.props.schemaData, ArrayFieldTemplate });
         getSelectedSaga(currentPage);
-    }
 
-    componentWillUnmount() {
+        jQuery("[class*='bootstrap-typeahead-menu']").click(function() {
+            console.log("Send to me data");
+        })
     }
 
     componentWillReceiveProps(nextProps, prevProps) {
@@ -64,11 +61,10 @@ class WizardFormTradePage extends Component {
             }
             else {
                 const { sagaSelected } = this.props;
-                console.log("saga selected:  ", sagaSelected.data.formData);
+                console.log("saga selected:  ", this.props);
                 this.setState({
                     ...nextProps.schemaData,
-                    form: true, ArrayFieldTemplate,
-                    formData: sagaSelected.data.formData
+                    form: true, ArrayFieldTemplate
                 });
             }
         }
@@ -103,6 +99,7 @@ class WizardFormTradePage extends Component {
                       onChange={log("changed")}
                       onSubmit={({formData}) => this.onSubmit(formData)}
                       ArrayFieldTemplate={ArrayFieldTemplate}
+                      noHtml5Validate={true}
                       liveValidate={liveValidate}
                       transformErrors={transformErrors}
                       onError={log("errors")} />

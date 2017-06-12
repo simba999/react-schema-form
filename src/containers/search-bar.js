@@ -3,6 +3,7 @@ import {connect}                        from "react-redux";
 import {bindActionCreators}             from "redux";
 import {fetchCategories, sagaForm}                from "../actions/index";
 import { Typeahead }                    from 'react-bootstrap-typeahead';
+import jQuery                           from 'jquery';
 
 class SearchBar extends Component {
     constructor(props) {
@@ -19,11 +20,18 @@ class SearchBar extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.submitCategory = this.submitCategory.bind(this);
+        this._handleChange = this._handleChange.bind(this);
     }
 
     componentDidMount() {
         const { fetchCategories } = this.props;
         fetchCategories('');
+
+        jQuery("[name='searchText']").keydown(function(e) {
+            if (e.keyCode === 13) {
+                jQuery("#searchTextBtn").click();
+            }
+        });
     }
 
     componentWillReceiveProps(nextProps, prevProps) {
@@ -56,6 +64,11 @@ class SearchBar extends Component {
         }     
     }
 
+    _handleChange(e) {
+        document.getElementsByName('searchText')[0].value = e[0].alias;
+        jQuery("#searchTextBtn").click();
+    }
+
     render() {
         return (
             <section className="search-section">
@@ -67,10 +80,11 @@ class SearchBar extends Component {
                         labelKey="alias"
                         name="searchText"
                         className=""
+                        onChange={this._handleChange}
                         options={this.props.categories.categories}
                     />
                     <div>
-                        <button type="button" onClick={() => this.submitCategory()}>Submit</button>
+                        <button id="searchTextBtn" type="button" onClick={() => this.submitCategory()}>Submit</button>
                     </div>
                 </div>
                 </form>

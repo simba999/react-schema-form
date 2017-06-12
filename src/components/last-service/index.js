@@ -37,15 +37,6 @@ let data = [
     }
 ];
 
-let testData = {
-	"isHeart": true,
-    "isShield": false,
-    "isGreen": true,
-    "starMark": 5,
-    "isEndToday": true,
-    "price": 0
-}
-
 function ItemList(data) {
     let List = [];
     data.map((item, key) => {

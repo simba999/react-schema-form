@@ -1,4 +1,4 @@
-    import React, {Component} from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {fetchSaga, saveSelectedSaga} from "../../actions/index";
@@ -20,21 +20,11 @@ class WizardForm extends Component {
 
     componentWillMount() {
         const {fetchSaga} = this.props;
-// <<<<<<< HEAD
         fetchSaga(0);
     }
 
     componentWillReceiveProps(nextProps, prevProps) {
         if (nextProps !== prevProps) this.setState({schemaData: nextProps.schemaData.saga.schemaData});
-// =======
-//         this.props.fetchSaga(0);
-//     }
-
-//     componentWillReceiveProps(nextProps, prevProps) {
-//         if (nextProps !== prevProps) {
-//             this.setState({schemaData: nextProps.schemaData.saga.schemaData});
-//         }
-// >>>>>>> 9c3d2edd7d1300e146cd11e337c90c9c60e7b4e3
     }
 
     nextPage() {
@@ -85,7 +75,6 @@ class WizardForm extends Component {
 
 WizardForm.propTypes = {
     onSubmit: PropTypes.func
-
 }
 
 function mapStateToProps(state) {
