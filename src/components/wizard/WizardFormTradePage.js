@@ -52,6 +52,7 @@ class WizardFormTradePage extends Component {
 
     componentWillReceiveProps(nextProps, prevProps) {
         if (nextProps !== prevProps) {
+            console.log("Wizard Next Props:  ", nextProps);
             const {ArrayFieldTemplate} = nextProps.schemaData;
             if (Object.keys(nextProps.formData.sagaSelected.pagedata.formData).length > 0) {
                 this.setState({
@@ -62,16 +63,12 @@ class WizardFormTradePage extends Component {
                 });
             }
             else {
-                let resultFormData = {};
-
-                nextProps.formData.sagaSelected.data.map((item) => {
-                    resultFormData = item.formData;
-                });
-
+                const { sagaSelected } = this.props;
+                console.log("saga selected:  ", sagaSelected.data.formData);
                 this.setState({
                     ...nextProps.schemaData,
                     form: true, ArrayFieldTemplate,
-                    formData: resultFormData
+                    formData: sagaSelected.data.formData
                 });
             }
         }
@@ -105,7 +102,6 @@ class WizardFormTradePage extends Component {
                       formData={formData}
                       onChange={log("changed")}
                       onSubmit={({formData}) => this.onSubmit(formData)}
-                      validate={this.state.validate}
                       ArrayFieldTemplate={ArrayFieldTemplate}
                       liveValidate={liveValidate}
                       transformErrors={transformErrors}
@@ -142,6 +138,7 @@ WizardFormTradePage.propTypes = {
 };
 
 function mapStateToProps(state) {
+    console.log("State:  ", state);
     return {
         formData: state
     };

@@ -16,11 +16,13 @@
         "properties": {
           "firstName": {
             "type": "string",
-            "title": "First name"
+            "title": "First name",
+            "required": true
           },
           "lastName": {
             "type": "string",
-            "title": "Last name"
+            "title": "Last name",
+            "required": true
           },
           "age": {
             "type": "integer",
@@ -55,6 +57,10 @@
         "date": {
           "ui:widget": "alt-datetime"
         }
+      },
+      "formData": {
+        "firstName": "",
+        "lastName": ""
       },
       "title": "Basic Episode",
       "page": 1
